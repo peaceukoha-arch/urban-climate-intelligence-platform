@@ -25,18 +25,28 @@ from docx.shared import Inches
 # INITIALIZE EARTH ENGINE
 # ======================================
 
+from google.oauth2 import service_account
+import ee
+import streamlit as st
+
 try:
 
-    ee.Initialize()
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"]
+    )
 
-except Exception:
+    ee.Initialize(
+        credentials=credentials,
+        project="ee-amarachipeaceukoha"
+    )
+
+except Exception as e:
 
     st.error(
-        "Earth Engine authentication is not configured."
+        f"Earth Engine initialization failed: {e}"
     )
 
     st.stop()
-
 
 # ======================================
 # LANDSAT 8 + 9 COLLECTION
