@@ -25,18 +25,20 @@ from docx.shared import Inches
 # INITIALIZE EARTH ENGINE
 # ======================================
 
-from google.oauth2 import service_account
 import ee
 import streamlit as st
 
 try:
 
-    credentials = service_account.Credentials.from_service_account_info(
-        st.secrets["gcp_service_account"]
+    service_account = st.secrets["gcp_service_account"]["client_email"]
+
+    credentials = ee.ServiceAccountCredentials(
+        service_account,
+        key_data=dict(st.secrets["gcp_service_account"])
     )
 
     ee.Initialize(
-        credentials=credentials,
+        credentials,
         project="ee-amarachipeaceukoha"
     )
 
@@ -47,7 +49,6 @@ except Exception as e:
     )
 
     st.stop()
-
 # ======================================
 # LANDSAT 8 + 9 COLLECTION
 # ======================================
