@@ -29,11 +29,13 @@ try:
 
     ee.Initialize()
 
-except:
+except Exception:
 
-    ee.Authenticate()
+    st.error(
+        "Earth Engine authentication is not configured."
+    )
 
-    ee.Initialize()
+    st.stop()
 
 
 # ======================================
