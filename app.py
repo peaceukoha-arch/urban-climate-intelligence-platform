@@ -36,7 +36,7 @@ try:
 
     credentials = ee.ServiceAccountCredentials(
         SERVICE_ACCOUNT,
-        "/etc/secrets/service-account.json"
+        "/etc/secrets/ee-amarachipeaceukoha-8f5ff19c8810.json"
     )
 
     ee.Initialize(
@@ -53,6 +53,7 @@ except Exception as e:
     st.error(
         f"Earth Engine initialization failed: {e}"
     )
+
 
 # ======================================
 # LANDSAT 8 + 9 COLLECTION
