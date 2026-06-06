@@ -21,25 +21,31 @@ from docx import Document
 from docx.shared import Inches
 
 
-# ======================================
+# ==============================
 # INITIALIZE EARTH ENGINE
-# ======================================
+# ==============================
 
 import ee
 import streamlit as st
 
 try:
 
-    service_account = st.secrets["gcp_service_account"]["client_email"]
+    SERVICE_ACCOUNT = (
+        "urban-climate-service@ee-amarachipeaceukoha.iam.gserviceaccount.com"
+    )
 
     credentials = ee.ServiceAccountCredentials(
-        service_account,
-        key_data=dict(st.secrets["gcp_service_account"])
+        SERVICE_ACCOUNT,
+        "/etc/secrets/service-account.json"
     )
 
     ee.Initialize(
         credentials,
         project="ee-amarachipeaceukoha"
+    )
+
+    st.success(
+        "Earth Engine initialized successfully!"
     )
 
 except Exception as e:
@@ -48,7 +54,6 @@ except Exception as e:
         f"Earth Engine initialization failed: {e}"
     )
 
-    st.stop()
 # ======================================
 # LANDSAT 8 + 9 COLLECTION
 # ======================================
