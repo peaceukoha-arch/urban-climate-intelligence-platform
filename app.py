@@ -39,10 +39,7 @@ try:
         "/etc/secrets/ee-amarachipeaceukoha-8f5ff19c8810.json"
     )
 
-    ee.Initialize(
-        credentials,
-        project="ee-amarachipeaceukoha"
-    )
+    ee.Initialize(credentials)
 
     st.success(
         "Earth Engine initialized successfully!"
