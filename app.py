@@ -26,15 +26,22 @@ from docx.shared import Inches
 # ==============================
 
 import ee
+import json
 import streamlit as st
-from google.oauth2 import service_account
 
 EE_READY = False
 
 try:
 
-    credentials = service_account.Credentials.from_service_account_info(
-        st.secrets["gcp_service_account"]
+    SERVICE_ACCOUNT = (
+        st.secrets["gcp_service_account"]["client_email"]
+    )
+
+    credentials = ee.ServiceAccountCredentials(
+        SERVICE_ACCOUNT,
+        key_data=json.dumps(
+            dict(st.secrets["gcp_service_account"])
+        )
     )
 
     ee.Initialize(credentials)
@@ -51,15 +58,12 @@ except Exception as e:
         f"Earth Engine initialization failed: {e}"
     )
 
-
-
-
 # ======================================
 # LANDSAT 8 + 9 COLLECTION
 # ======================================
 if not EE_READY:
     st.stop()
-    
+
 landsat8 = ee.ImageCollection(
     'LANDSAT/LC08/C02/T1_L2'
 )
